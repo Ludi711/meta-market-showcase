@@ -10,7 +10,7 @@ This repo is a public showcase for the project. The live codebase is private, bu
 
 Live app: https://themetamarket.co.uk
 
-screenshots/Homepage.png
+Homepage
 
 ## Key Features
 
@@ -21,7 +21,7 @@ screenshots/Homepage.png
 * Answer daily and weekly quizzes or predictions
 * Follow meta shifts around heroes, patches and trends
 
-screenshots/Market.png
+Market
 
 ## Data and Backend
 
