@@ -50,12 +50,3 @@ Heroes rise and fall all the time based on patches, pro play and community opini
 * Portfolio and leaderboard tracking
 * Combining gaming, analytics and finance-style mechanics
 
-## Future Improvements
-
-* Better hero price history charts
-* More daily and weekly predictions
-* Improved leaderboard logic
-* Watchlists
-* Meta IQ scoring
-* Automated Dota data feeds
-* More detailed portfolio analytics
