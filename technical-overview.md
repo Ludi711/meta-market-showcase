@@ -1,119 +1,120 @@
 ## Technical Overview
 
-**The Meta Market** is a Dota 2 virtual stock market platform where users trade heroes as if they were market assets. Hero prices are driven by real meta-performance data, allowing users to build portfolios, compete on leaderboards, and test their ability to read changes in the Dota 2 meta.
+**The Meta Market** is a Dota 2 virtual stock market where users trade heroes as market assets. Hero prices are updated using real Dota 2 meta-performance data, allowing users to build portfolios, compete on leaderboards, and test how well they can read the meta.
 
-This repository is a showcase version of the project, focused on explaining the product architecture, data model, feature logic, and technical implementation behind the live application.
+This repository is a showcase version of the live project, highlighting the data pipeline, SQL backend structure, React frontend, and core product logic.
 
-### Core Concept
+### Tech Stack
 
-The platform turns Dota 2 heroes into tradeable virtual assets. Users can buy and sell heroes, track portfolio performance, compete against other users, and interact with daily/weekly engagement features such as quizzes, predictions, and meta-based challenges.
+* **Frontend:** React
+* **Backend / Database:** SQL via Supabase
+* **Data Pipeline:** Python
+* **Authentication:** Supabase Auth
+* **External Data:** Dota 2 hero performance data
 
-The goal was to combine gaming, market mechanics, data engineering, and retention-focused product design into one interactive web application.
-
-### Key Features
+### Core Features
 
 * Virtual hero trading system
-* Hero price movement based on real Dota 2 meta data
+* Hero price updates based on meta-performance data
 * User portfolios and transaction history
-* Leaderboards and performance rankings
-* Stop-loss and take-profit style trading mechanics
+* Leaderboards and user rankings
+* Stop-loss and take-profit style mechanics
 * Daily and weekly quizzes
 * Prediction events for patches, tournaments, and meta shifts
-* Meta IQ scoring concept to reward users for accurate predictions
-* User authentication and persistent account data
-* Supabase-backed database for trades, balances, rankings, and user activity
+* Meta IQ scoring concept
+* Persistent user accounts and trading activity
 
 ### Data Pipeline
 
-The application uses external Dota 2 hero performance data as the basis for market updates. A scheduled data pull retrieves hero statistics such as win rate, pick rate, and recent changes in performance.
+Hero performance data is pulled using Python and transformed into market price signals.
 
-This data is transformed into market indicators and used to update hero prices over time. The pricing model is designed to reward heroes that are gaining popularity or improving in performance, while heroes falling out of the meta lose value.
+The pipeline follows this basic flow:
 
-At a high level, the pipeline follows this structure:
+1. Pull Dota 2 hero performance data.
+2. Clean and standardise hero statistics.
+3. Compare current stats against previous snapshots.
+4. Calculate hero price movement.
+5. Store updated prices and history in Supabase.
+6. Update portfolio values, leaderboards, and market pages.
 
-1. Pull hero performance data from a Dota 2 data source.
-2. Clean and standardise the incoming hero statistics.
-3. Compare current hero performance against recent historical snapshots.
-4. Calculate price movement signals.
-5. Store updated hero prices and historical records in Supabase.
-6. Reflect the updated prices across portfolios, leaderboards, and market pages.
+The pricing logic is designed to reward heroes gaining popularity or improving in performance, while heroes falling out of the meta lose value.
 
-### Database Design
+### Backend / SQL Design
 
-Supabase is used as the backend database and authentication layer. The schema is designed around persistent user activity and auditable market transactions.
+The backend is built around SQL tables in Supabase, with a focus on storing auditable user activity and market history.
 
 Core table areas include:
 
-* **Users / Profiles** — stores user account metadata, balances, and leaderboard-related fields.
-* **Heroes / Assets** — stores hero metadata and current market price.
-* **Price History** — stores historical hero price snapshots for trend analysis.
-* **Transactions** — records buy/sell activity, quantity, price, and timestamp.
-* **Portfolios** — tracks user holdings and unrealised portfolio value.
-* **Orders / Risk Controls** — supports mechanics such as stop-loss and take-profit logic.
-* **Quizzes / Predictions** — stores user answers, prediction events, scoring, and Meta IQ inputs.
-* **Leaderboard Tables / Views** — aggregate portfolio values and performance rankings.
+* **Profiles** — user account metadata, balances, and leaderboard fields.
+* **Heroes** — hero metadata and current market price.
+* **Price History** — historical hero price snapshots.
+* **Transactions** — buy/sell activity, quantity, price, and timestamp.
+* **Portfolios** — user holdings and unrealised portfolio value.
+* **Orders** — stop-loss and take-profit logic.
+* **Quizzes / Predictions** — quiz answers, prediction entries, scoring, and Meta IQ inputs.
+* **Leaderboards** — ranked user performance based on portfolio value and activity.
 
-The structure was designed to keep financial-style transactions auditable rather than simply overwriting user balances or holdings.
+The transaction model is designed to avoid simply overwriting balances or holdings, making user activity easier to audit and debug.
 
 ### Trading Logic
 
-When a user buys or sells a hero, the application validates the action against the user’s available balance and current holdings. Valid trades are recorded as transactions, and the user’s portfolio is updated accordingly.
+When a user buys or sells a hero, the app checks their available balance, current holdings, and the latest hero price. Valid trades are written to the transaction table and reflected in the user’s portfolio.
 
 Portfolio value is calculated from:
 
-* Current cash balance
+* Cash balance
 * Current hero holdings
-* Latest hero market prices
+* Latest hero prices
 * Realised and unrealised gains/losses
 
-Additional market mechanics, such as stop-loss and take-profit orders, are designed to make the experience feel closer to a simplified trading platform while remaining lightweight and accessible for casual Dota players.
+Stop-loss and take-profit features add simple trading-style risk controls while keeping the experience accessible for casual Dota players.
 
-### Engagement Systems
+### React Frontend
 
-The platform includes quiz and prediction mechanics to encourage repeat visits beyond simple portfolio checking.
+The frontend is built in React and presents the platform as a lightweight trading dashboard for Dota 2 players.
 
-These systems are intended to support:
-
-* Daily or weekly user engagement
-* Patch-based predictions
-* Tournament prediction events
-* Hero trend forecasting
-* Meta IQ scoring
-* Future prize or tournament-based competitions
-
-The prediction framework is designed to be reusable, allowing new events to be created around weekly meta changes, major patches, or professional tournaments.
-
-### Frontend / Product Design
-
-The frontend is designed as a playful but data-rich gaming dashboard. The UI presents market data in a way that feels familiar to both Dota players and users of trading or fantasy sports platforms.
-
-Key interface areas include:
+Main interface areas include:
 
 * Market overview
 * Hero detail pages
 * Portfolio dashboard
 * Transaction history
 * Leaderboard
-* Quiz and prediction pages
+* Quiz pages
+* Prediction event pages
 * Meta IQ / user performance sections
 
-The design challenge was to make the platform feel fun and game-like while still giving users enough data to make meaningful decisions.
+The UI is designed to feel playful and game-like while still presenting useful trading and performance information.
 
-### Technical Skills Demonstrated
+### Engagement Features
+
+The platform includes quizzes and prediction events to encourage repeat visits beyond checking portfolio value.
+
+These features support:
+
+* Daily and weekly quizzes
+* Patch-based predictions
+* Tournament prediction events
+* Hero trend forecasting
+* Meta IQ scoring
+* Future prize-based competitions
+
+The prediction system is designed to be reusable, so new events can be created for patches, tournaments, or weekly meta changes.
+
+### Skills Demonstrated
 
 This project demonstrates:
 
-* Full-stack product thinking
-* Supabase database design
-* Authentication-backed user state
-* SQL-based transaction and portfolio modelling
-* Data pipeline design
-* External API ingestion
+* React frontend development
+* Python data pipeline development
+* SQL database design
+* Supabase authentication and data storage
+* Transaction-based portfolio modelling
+* External API/data ingestion
 * Market-style pricing logic
 * Leaderboard and scoring systems
 * Gamified product design
-* Retention mechanics through quizzes and predictions
-* Building a live, user-facing analytics product from concept to deployment
+* Building and deploying a live user-facing analytics product
 
 ### Future Improvements
 
@@ -123,6 +124,6 @@ Potential future improvements include:
 * Email alerts for watched heroes
 * Tournament-based prediction competitions
 * Prize-supported leaderboard events
-* Improved anti-abuse and transaction validation
-* Public API endpoints for market data
+* Improved anti-abuse checks
+* Public market data API endpoints
 * More advanced Meta IQ scoring
