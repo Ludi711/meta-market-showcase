@@ -36,6 +36,8 @@ Behind the app, the project uses SQL tables to track the main product logic, inc
 * Quiz and prediction responses
 * Stop loss and take profit settings
 
+![Hero%20Pricing%20Chart](screenshots/Hero%20Pricing%20Chart.png)
+
 This gives the app enough structure to track user activity, calculate performance and support future analytics.
 
 ## Why I Built It
