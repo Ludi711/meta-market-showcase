@@ -10,6 +10,8 @@ This repo is a public showcase for the project. The live codebase is private, bu
 
 Live app: https://themetamarket.co.uk
 
+screenshots/Homepage.png
+
 ## Key Features
 
 * Trade Dota 2 heroes like virtual stocks
@@ -18,6 +20,8 @@ Live app: https://themetamarket.co.uk
 * Compete through leaderboards
 * Answer daily and weekly quizzes or predictions
 * Follow meta shifts around heroes, patches and trends
+
+screenshots/Market.png
 
 ## Data and Backend
 
