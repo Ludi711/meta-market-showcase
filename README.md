@@ -40,13 +40,3 @@ I built Meta Market because I thought the Dota meta would make a fun virtual mar
 
 Heroes rise and fall all the time based on patches, pro play and community opinion, so it felt natural to turn that into a trading-style game. It was also a good excuse to build a live product with market mechanics, user data, SQL-backed tracking and a few engagement hooks to keep people coming back.
 
-## What This Shows
-
-* Building and launching a live MVP
-* Product thinking
-* SQL-backed data modelling
-* Trading-style logic
-* User engagement features
-* Portfolio and leaderboard tracking
-* Combining gaming, analytics and finance-style mechanics
-
